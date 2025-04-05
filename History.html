@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History - Limuru Dairy Farmers Co-operative Society LTD</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background: #f4f4f4; 
+        }
+        header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 20px; 
+            text-align: center; 
+        }
+        nav { 
+            display: flex; 
+            justify-content: center; 
+            background: #34495e; 
+            padding: 10px; 
+        }
+        nav a { 
+            color: white; 
+            text-decoration: none; 
+            padding: 10px 20px; 
+            transition: 0.3s; 
+        }
+        nav a:hover { 
+            background: #1abc9c; 
+        }
+        .dropdown { 
+            position: relative; 
+            display: inline-block; 
+        }
+        .dropdown-content { 
+            display: none; 
+            position: absolute; 
+            background-color: #f9f9f9; 
+            min-width: 160px; 
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2); 
+            z-index: 1; 
+        }
+        .dropdown-content a { 
+            color: black; 
+            padding: 12px 16px; 
+            text-decoration: none; 
+            display: block; 
+        }
+        .dropdown-content a:hover { 
+            background: #ddd; 
+        }
+        .dropdown:hover .dropdown-content { 
+            display: block; 
+        }
+        .cart-container { 
+            position: relative; 
+            display: inline-block; 
+            margin-left: 20px; 
+        }
+        .cart-icon { 
+            font-size: 24px; 
+            color: white; 
+            cursor: pointer; 
+            padding: 10px; 
+            transition: 0.3s; 
+        }
+        .cart-icon:hover { 
+            background: #1abc9c; 
+        }
+        .cart-count { 
+            position: absolute; 
+            top: 0; 
+            right: 0; 
+            background: #e67e22; 
+            color: white; 
+            border-radius: 50%; 
+            padding: 2px 6px; 
+            font-size: 12px; 
+        }
+        section { 
+            padding: 40px; 
+            text-align: center; 
+            background: white; 
+            margin: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+        }
+        footer { 
+            background: #2c3e50; 
+            color: white; 
+            text-align: center; 
+            padding: 10px; 
+            margin-top: 20px; 
+        }
+
+        /* Banner styles */
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+        .banner-slider {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            animation: slideShift 15s infinite ease-in-out;
+        }
+        .slide {
+            flex: 1 0 100%;
+            height: 100%;
+            background: center/cover no-repeat;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateZ(20px);
+            text-align: center;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .slide-content h2 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .slide-content p {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .slide-content button {
+            background: #e67e22;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.3s, transform 0.3s;
+            transform: translateZ(30px);
+        }
+        .slide-content button:hover {
+            background: #d35400;
+            transform: translateZ(40px);
+        }
+        @keyframes slideShift {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(0); }
+            33% { transform: translateX(-100%); }
+            58% { transform: translateX(-100%); }
+            66% { transform: translateX(-200%); }
+            91% { transform: translateX(-200%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* History-specific styles */
+        .history-segment { 
+            margin: 20px 0; 
+            text-align: left; 
+            max-width: 800px; 
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+        .history-segment h3 { 
+            color: #2c3e50; 
+            margin-bottom: 10px; 
+            font-size: 1.5em; 
+        }
+        .history-segment p { 
+            font-size: 1em; 
+            line-height: 1.6; 
+        }
+        .history-image { 
+            max-width: 100%; 
+            height: auto; 
+            margin: 20px auto; 
+            display: block; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+        }
+
+        @media (max-width: 768px) {
+            .banner { height: 300px; }
+            .slide-content h2 { font-size: 22px; }
+            .slide-content p { font-size: 16px; }
+            .slide-content button { padding: 8px 16px; font-size: 16px; }
+            nav { flex-direction: column; text-align: center; }
+            .cart-container { margin: 10px 0; }
+            section { padding: 20px; }
+            .history-segment h3 { font-size: 1.3em; }
+            .history-segment p { font-size: 0.95em; }
+            .history-image { max-width: 90%; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Limuru Dairy Farmers Co-operative Society LTD</h1>
+    </header>
+
+<nav>
+    <div class="dropdown">
+        <a href="about.html">About</a>
+        <div class="dropdown-content">
+            <a href="about.html">About Us</a>
+            <a href="history.html">History</a>
+            <a href="mission.html">Mission</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="#services">Services</a>
+        <div class="dropdown-content">
+            <a href="#milk-processing">Milk Processing</a>
+            <a href="#distribution">Distribution</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="membership.html">Membership</a>
+        <div class="dropdown-content">
+            <a href="joinus.html">Join Us</a>
+            <a href="form.html">Membership Form</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="index.html">Online Shop</a>
+        <div class="dropdown-content">
+            <a href="product.html">View Products</a>
+            <a href="shop.html">Place an Order</a>
+            <a href="cart.html">Cart</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="contact.html">Contact</a>
+        <div class="dropdown-content">
+            <a href="contact.html">Contact Us</a>
+        </div>
+    </div>
+    <div class="cart-container">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-count" id="cart-count">0</span>
+        <div class="cart-dropdown" id="cart-dropdown">
+            <h3>Cart</h3>
+            <ul id="cart-items"></ul>
+            <p>Total: <span id="cart-total">0 Ksh</span></p>
+            <button class="checkout-btn" onclick="window.location.href='cart.html'">Proceed to Checkout</button>
+        </div>
+    </div>
+</nav>
+    <div class="banner">
+        <div class="banner-slider">
+            <div class="slide" style="background-image: url('images/event2.jpg');">
+                <div class="slide-content">
+                    <h2>Fresh Dairy Delivered to You!</h2>
+                    <p>Order by March 15, 2025, and enjoy 10% off your first delivery.</p>
+                    <button onclick="window.location.href='product.html'">Shop Now</button>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('images/JMM.jpg');">
+                <div class="slide-content">
+                    <h2>Pure Milk, Straight from Limuru</h2>
+                    <p>Experience the taste of sustainability.</p>
+                    <button onclick="window.location.href='product.html'">Explore Products</button>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('images/Can.jpg');">
+                <div class="slide-content">
+                    <h2>Join Our Dairy Community</h2>
+                    <p>Support local farmers today!</p>
+                    <button onclick="window.location.href='joinus.html'">Become a Member</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <h2>Our History</h2>
+        <div class="history-segment">
+            <h3>Founding and Early Years (1962-1963)</h3>
+            <p>The Limuru Dairy Farmers Co-operative Society was officially established on April 28, 1962, under the Co-operative Act. Operations commenced in March 1963 with a modest group of seven members in the central highlands of Kenya, specifically in Limuru sub-county, Kiambu County—a region renowned for its exceptional milk quality. Membership grew steadily, reaching 76 members with the establishment of its first collection center, now known as Route 1.</p>
+        </div>
+
+        <div class="history-segment">
+            <h3>Expansion and Support (1963-1964)</h3>
+            <p>In 1963, UNICEF provided additional milk cans to support the fledgling cooperative. By 1964, recognizing the high costs farmers faced from private vendors, the management opened a store to supply farm inputs, feeds, and milk cans at more affordable rates, enhancing member benefits and operational efficiency.</p>
+        </div>
+
+        <div class="history-segment">
+            <h3>Land and Infrastructure (1967)</h3>
+            <p>The year 1967 marked significant progress as the society acquired its own land and purchased its first vehicle, bolstering its independence and logistical capabilities.</p>
+        </div>
+
+        <div class="history-segment">
+            <h3>Head Office Development (1984-1986)</h3>
+            <p>Construction of the society’s head office, a four-story building named Maziwa House, began in 1984 and was completed in November 1986, providing a permanent base for administrative and operational activities.</p>
+        </div>
+
+        <div class="history-segment">
+            <h3>Service Enhancements (1987)</h3>
+            <p>In 1987, with member approval and government backing, the society introduced Artificial Insemination and Clinical services, improving livestock health and productivity for its members.</p>
+        </div>
+
+        <div class="history-segment">
+            <h3>Milk Processing Begins (1997)</h3>
+            <p>By 1997, Limuru Milk Processor launched milk processing operations under the Limuru Fresh brand, marking a pivotal shift toward value-added dairy production.</p>
+        </div>
+
+        <div class="history-segment">
+            <h3>Modern Operations and Growth</h3>
+            <p>Today, the society boasts over 3,000 active milk suppliers and operates 37 milk collection centers, handling approximately 30,000 liters of milk daily. Owned entirely by smallholder farmers with equal shares and rights, the cooperative uses digital systems to collect, test, and bulk milk in strategically placed coolers. The raw milk is transported to the factory, where it undergoes quality checks, pasteurization, and packaging into 50 kg aluminum cans for distribution to hospitals, schools, supermarkets, and milk bars across Nairobi and surrounding areas.</p>
+            <img src="images/Can.jpg" alt="Modern Milk Collection at Limuru Dairy" class="history-image">
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Limuru Dairy Farmers Co-operative Society LTD. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Load cart count from localStorage
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        document.getElementById('cart-count').textContent = cart.length;
+    </script>
+</body>
+</html>

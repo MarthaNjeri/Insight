@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Limuru Dairy Farmers Co-operative Society LTD</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background: #f4f4f4; 
+        }
+        header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 20px; 
+            text-align: center; 
+        }
+        nav { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            background: #34495e; 
+            padding: 10px; 
+        }
+        nav a { 
+            color: white; 
+            text-decoration: none; 
+            padding: 10px 20px; 
+            transition: 0.3s; 
+        }
+        nav a:hover { 
+            background: #1abc9c; 
+        }
+        .dropdown { 
+            position: relative; 
+            display: inline-block; 
+        }
+        .dropdown-content { 
+            display: none; 
+            position: absolute; 
+            background-color: #f9f9f9; 
+            min-width: 160px; 
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2); 
+            z-index: 1; 
+        }
+        .dropdown-content a { 
+            color: black; 
+            padding: 12px 16px; 
+            text-decoration: none; 
+            display: block; 
+        }
+        .dropdown-content a:hover { 
+            background: #ddd; 
+        }
+        .dropdown:hover .dropdown-content { 
+            display: block; 
+        }
+        .cart-container { 
+            position: relative; 
+            display: inline-block; 
+            margin-left: 20px; 
+        }
+        .cart-icon { 
+            font-size: 24px; 
+            color: white; 
+            cursor: pointer; 
+            padding: 10px; 
+            transition: 0.3s; 
+        }
+        .cart-icon:hover { 
+            background: #1abc9c; 
+        }
+        .cart-count { 
+            position: absolute; 
+            top: 0; 
+            right: 0; 
+            background: #e67e22; 
+            color: white; 
+            border-radius: 50%; 
+            padding: 2px 6px; 
+            font-size: 12px; 
+        }
+
+        /* Banner Styles (Copied from shop.html) */
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+        .banner-slider {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            animation: slideShift 15s infinite ease-in-out;
+        }
+        .slide {
+            flex: 1 0 100%;
+            height: 100%;
+            background: center/cover no-repeat;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateZ(20px);
+            text-align: center;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .slide-content h2 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .slide-content p {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .slide-content button {
+            background: #e67e22;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.3s, transform 0.3s;
+            transform: translateZ(30px);
+        }
+        .slide-content button:hover {
+            background: #d35400;
+            transform: translateZ(40px);
+        }
+        @keyframes slideShift {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(0); }
+            33% { transform: translateX(-100%); }
+            58% { transform: translateX(-100%); }
+            66% { transform: translateX(-200%); }
+            91% { transform: translateX(-200%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Invoice Styles (Maintained from Shopping Cart Invoice) */
+        .invoice-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .total {
+            text-align: right;
+            font-weight: bold;
+        }
+        .print-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .print-btn:hover {
+            background-color: #2980b9;
+        }
+        .order-details {
+            margin-bottom: 20px;
+        }
+        .order-details p {
+            margin: 5px 0;
+            color: #34495e;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .banner { height: 300px; }
+            .slide-content h2 { font-size: 22px; }
+            .slide-content p { font-size: 16px; }
+            .slide-content button { padding: 8px 16px; font-size: 16px; }
+        }
+        @media print {
+            header, nav, .banner, footer, .print-btn { display: none !important; }
+            .invoice-container { 
+                margin: 0; 
+                padding: 10mm; 
+                box-shadow: none; 
+                border: none; 
+            }
+        }
+        
+        footer { 
+            background: #2c3e50; 
+            color: white; 
+            text-align: center; 
+            padding: 10px; 
+            margin-top: 20px; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Limuru Dairy Farmers Co-operative Society LTD</h1>
+    </header>
+
+    <nav>
+        <div class="dropdown">
+            <a href="about.html">About</a>
+            <div class="dropdown-content">
+                <a href="about.html">About Us</a>
+                <a href="history.html">History</a>
+                <a href="mission.html">Mission</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="#services">Services</a>
+            <div class="dropdown-content">
+                <a href="#milk-processing">Milk Processing</a>
+                <a href="#distribution">Distribution</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="membership.html">Membership</a>
+            <div class="dropdown-content">
+                <a href="joinus.html">Join Us</a>
+                <a href="form.html">Membership Form</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="index.html">Online Shop</a>
+            <div class="dropdown-content">
+                <a href="product.html">View Products</a>
+                <a href="shop.html">Place an Order</a>
+                <a href="cart.html">Cart</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a href="contact.html">Contact</a>
+            <div class="dropdown-content">
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+        <div class="cart-container">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-count" id="cart-count">0</span>
+        </div>
+    </nav>
+
+    <!-- Banner Section (Copied from shop.html) -->
+    <div class="banner">
+        <div class="banner-slider">
+            <div class="slide" style="background-image: url('images/jmm.jpg');">
+                <div class="slide-content">
+                    <h2>Fresh Dairy Delivered to You!</h2>
+                    <p>Order by March 15, 2025, and enjoy 10% off your first delivery.</p>
+                    <button onclick="window.location.href='product.html'">Shop Now</button>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('images/pro.jpg');">
+                <div class="slide-content">
+                    <h2>Pure Milk, Straight from Limuru</h2>
+                    <p>Experience the taste of sustainability.</p>
+                    <button onclick="window.location.href='product.html'">Explore Products</button>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('images/Can.jpg');">
+                <div class="slide-content">
+                    <h2>Join Our Dairy Community</h2>
+                    <p>Support local farmers today!</p>
+                    <button onclick="window.location.href='joinus.html'">Become a Member</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invoice Section (Maintained from Shopping Cart Invoice) -->
+    <div class="invoice-container" id="invoice">
+        <h1>Limuru Dairy Farmers Co-operative Society LTD</h1>
+        <h2>Invoice</h2>
+        <p><strong>Date:</strong> <span id="invoice-date"></span></p>
+
+        <div class="order-details">
+            <p><strong>Name:</strong> <span id="order-name"></span></p>
+            <p><strong>Phone:</strong> <span id="order-phone"></span></p>
+            <p><strong>Email:</strong> <span id="order-email"></span></p>
+            <p><strong>Order Date:</strong> <span id="order-date"></span></p>
+            <p><strong>Time:</strong> <span id="order-time"></span></p>
+            <p><strong>Type:</strong> <span id="order-type"></span></p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Price (Ksh)</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+                <!-- Cart items will be inserted here -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="total">Grand Total:</td>
+                    <td id="grand-total">0 Ksh</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <button class="print-btn" onclick="window.print()">Print Invoice</button>
+
+    <footer>
+        <p>© 2025 Limuru Dairy Farmers Co-operative Society LTD. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const orderDetails = JSON.parse(localStorage.getItem('orderDetails')) || {};
+
+        // Elements
+        const cartItemsContainer = document.getElementById('cart-items');
+        const grandTotalElement = document.getElementById('grand-total');
+        const invoiceDate = document.getElementById('invoice-date');
+        const cartCount = document.getElementById('cart-count');
+        const orderName = document.getElementById('order-name');
+        const orderPhone = document.getElementById('order-phone');
+        const orderEmail = document.getElementById('order-email');
+        const orderDate = document.getElementById('order-date');
+        const orderTime = document.getElementById('order-time');
+        const orderType = document.getElementById('order-type');
+
+        function populateInvoice() {
+            invoiceDate.textContent = new Date().toLocaleDateString();
+
+            // Populate order details
+            orderName.textContent = orderDetails.name || 'N/A';
+            orderPhone.textContent = orderDetails.phone || 'N/A';
+            orderEmail.textContent = orderDetails.email || 'N/A';
+            orderDate.textContent = orderDetails.date || 'N/A';
+            orderTime.textContent = orderDetails.time || 'N/A';
+            orderType.textContent = orderDetails.type || 'N/A';
+
+            let grandTotal = 0;
+            if (cart.length > 0) {
+                cartItemsContainer.innerHTML = '';
+                cart.forEach(item => {
+                    const price = parseFloat(item.price) || 0;
+                    grandTotal += price;
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.name || 'Unknown Product'}</td>
+                        <td>${price.toFixed(0)} Ksh</td>
+                    `;
+                    cartItemsContainer.appendChild(row);
+                });
+                grandTotalElement.textContent = `${grandTotal.toFixed(0)} Ksh`;
+                cartCount.textContent = cart.length;
+            } else {
+                cartItemsContainer.innerHTML = '<tr><td colspan="2">No items in cart</td></tr>';
+                grandTotalElement.textContent = '0 Ksh';
+                cartCount.textContent = '0';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateInvoice();
+        });
+    </script>
+</body>
+</html>

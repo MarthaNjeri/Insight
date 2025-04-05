@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Limuru Dairy Farmers Co-operative Society LTD</title>
+    <style>
+        /* Your existing styles remain here */
+        
+        /* Add print-specific styles */
+        @media print {
+            header, nav, footer, .banner, .print-btn {
+                display: none !important;
+            }
+            .invoice {
+                border: none;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+            }
+            .invoice-table {
+                width: 100%;
+            }
+            body {
+                margin: 0;
+                padding: 10mm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Your existing HTML remains here up to the script -->
+
+    <script>
+        // Load cart and order details from localStorage
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const orderDetails = JSON.parse(localStorage.getItem('orderDetails')) || {};
+
+        // Elements
+        const invoiceItems = document.getElementById('invoice-items');
+        const invoiceTotal = document.getElementById('invoice-total');
+        const invoiceDate = document.getElementById('invoice-date');
+        const orderDate = document.getElementById('order-date');
+        const orderTime = document.getElementById('order-time');
+        const orderType = document.getElementById('order-type');
+        const orderName = document.getElementById('order-name');
+        const orderPhone = document.getElementById('order-phone');
+        const orderEmail = document.getElementById('order-email');
+        const cartCount = document.getElementById('cart-count');
+
+        // Function to populate invoice
+        function populateInvoice() {
+            // Set invoice date
+            invoiceDate.textContent = new Date().toLocaleDateString();
+
+            // Populate order details
+            orderDate.textContent = orderDetails.date || 'N/A';
+            orderTime.textContent = orderDetails.time || 'N/A';
+            orderType.textContent = orderDetails.type || 'N/A';
+            orderName.textContent = orderDetails.name || 'N/A';
+            orderPhone.textContent = orderDetails.phone || 'N/A';
+            orderEmail.textContent = orderDetails.email || 'N/A';
+
+            // Populate cart items and calculate total
+            if (cart.length > 0) {
+                let total = 0;
+                invoiceItems.innerHTML = ''; // Clear existing items
+                cart.forEach(item => {
+                    const priceMatch = item.price.match(/(\d+)\s*Ksh/);
+                    const price = priceMatch ? parseInt(priceMatch[1]) : 0;
+                    total += price;
+
+                    invoiceItems.innerHTML += `
+                        <tr>
+                            <td><img src="${item.image || 'placeholder.jpg'}" alt="${item.name}" onerror="this.src='placeholder.jpg'"></td>
+                            <td>${item.name || 'Unknown Product'}</td>
+                            <td>${item.price || '0 Ksh'}</td>
+                        </tr>
+                    `;
+                });
+                invoiceTotal.textContent = `${total} Ksh`;
+                cartCount.textContent = cart.length;
+            } else {
+                invoiceItems.innerHTML = '<tr><td colspan="3">No items in cart.</td></tr>';
+                cartCount.textContent = '0';
+            }
+        }
+
+        // Custom print function
+        function printInvoice() {
+            window.print();
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            populateInvoice();
+            // Update print button event listener
+            document.querySelector('.print-btn').addEventListener('click', printInvoice);
+        });
+    </script>
+</body>
+</html>

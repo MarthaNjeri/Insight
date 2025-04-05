@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Products - Limuru Dairy Farmers Co-operative Society LTD</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background: #f4f4f4; 
+        }
+        header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 20px; 
+            text-align: center; 
+        }
+        nav { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            background: #34495e; 
+            padding: 10px; 
+        }
+        nav a { 
+            color: white; 
+            text-decoration: none; 
+            padding: 10px 20px; 
+            transition: 0.3s; 
+        }
+        nav a:hover { 
+            background: #1abc9c; 
+        }
+        .dropdown { 
+            position: relative; 
+            display: inline-block; 
+        }
+        .dropdown-content { 
+            display: none; 
+            position: absolute; 
+            background-color: #f9f9f9; 
+            min-width: 160px; 
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2); 
+            z-index: 1; 
+        }
+        .dropdown-content a { 
+            color: black; 
+            padding: 12px 16px; 
+            text-decoration: none; 
+            display: block; 
+        }
+        .dropdown-content a:hover { 
+            background: #ddd; 
+        }
+        .dropdown:hover .dropdown-content { 
+            display: block; 
+        }
+        .cart-container { 
+            position: relative; 
+            display: inline-block; 
+            margin-left: 20px; 
+        }
+        .cart-icon { 
+            font-size: 24px; 
+            color: white; 
+            cursor: pointer; 
+            padding: 10px; 
+            transition: 0.3s; 
+        }
+        .cart-icon:hover { 
+            background: #1abc9c; 
+        }
+        .cart-count { 
+            position: absolute; 
+            top: 0; 
+            right: 0; 
+            background: #e67e22; 
+            color: white; 
+            border-radius: 50%; 
+            padding: 2px 6px; 
+            font-size: 12px; 
+        }
+        section { 
+            padding: 40px; 
+            text-align: center; 
+            background: white; 
+            margin: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+        }
+        footer { 
+            background: #2c3e50; 
+            color: white; 
+            text-align: center; 
+            padding: 10px; 
+            margin-top: 20px; 
+        }
+
+        /* 3D Banner Styles */
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+        .banner-slider {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            animation: slideShift 15s infinite ease-in-out;
+        }
+        .slide {
+            flex: 1 0 100%;
+            height: 100%;
+            background: center/cover no-repeat;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateZ(20px);
+            text-align: center;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .slide-content h2 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .slide-content p {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .slide-content button {
+            background: #e67e22;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.3s, transform 0.3s;
+            transform: translateZ(30px);
+        }
+        .slide-content button:hover {
+            background: #d35400;
+            transform: translateZ(40px);
+        }
+        @keyframes slideShift {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(0); }
+            33% { transform: translateX(-100%); }
+            58% { transform: translateX(-100%); }
+            66% { transform: translateX(-200%); }
+            91% { transform: translateX(-200%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Balanced Product Styles */
+        .products { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 20px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        .product-category { 
+            background: #fff; 
+            padding: 20px; 
+            border-radius: 15px; 
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1); 
+            width: 280px; 
+            min-height: 400px; 
+            text-align: center; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            position: relative; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+        }
+        .product-category:hover { 
+            transform: translateY(-10px) rotate(2deg); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15); 
+        }
+        .product-category h3 { 
+            font-size: 1.5em; 
+            color: #2c3e50; 
+            margin-bottom: 15px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+        .product-list { 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+        }
+        .product-card { 
+            padding: 10px; 
+            background: #f9f9f9; 
+            border-radius: 10px; 
+            transition: transform 0.2s ease; 
+        }
+        .product-card:hover { 
+            transform: scale(1.05); 
+        }
+        .product-card img { 
+            width: 100%; 
+            height: 120px; 
+            object-fit: cover; 
+            border-radius: 8px; 
+            border: 2px solid #e67e22; 
+        }
+        .product-card ul { 
+            list-style: none; 
+            padding: 0; 
+            font-size: 0.9em; 
+            margin: 10px 0; 
+            color: #34495e; 
+        }
+        .product-card button { 
+            background: #3498db; 
+            color: white; 
+            border: none; 
+            padding: 8px 12px; 
+            cursor: pointer; 
+            width: 100%; 
+            font-size: 0.9em; 
+            border-radius: 5px; 
+            transition: background 0.3s ease; 
+        }
+        .product-card button:hover { 
+            background: #2980b9; 
+        }
+        .product-category::before { 
+            content: "✿"; 
+            position: absolute; 
+            top: -10px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            font-size: 24px; 
+            color: #e67e22; 
+        }
+        .empty-space { 
+            flex-grow: 1; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: #999; 
+            font-style: italic; 
+            font-size: 0.9em; 
+        }
+
+        @media (max-width: 768px) {
+            .banner { height: 300px; }
+            .slide-content h2 { font-size: 22px; }
+            .slide-content p { font-size: 16px; }
+            .slide-content button { padding: 8px 16px; font-size: 16px; }
+            nav { flex-direction: column; align-items: center; }
+            .cart-container { margin: 10px 0; }
+            section { padding: 20px; }
+            .products { gap: 15px; }
+            .product-category { width: 45%; min-width: 220px; min-height: 350px; }
+            .product-card img { height: 100px; }
+        }
+        @media (max-width: 480px) {
+            .product-category { width: 100%; max-width: 300px; min-height: 300px; }
+            .product-card img { height: 90px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <h1>Limuru Dairy Farmers Co-operative Society LTD</h1>
+</header>
+
+<nav>
+    <div class="dropdown">
+        <a href="about.html">About</a>
+        <div class="dropdown-content">
+            <a href="about.html">About Us</a>
+            <a href="history.html">History</a>
+            <a href="mission.html">Mission</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="#services">Services</a>
+        <div class="dropdown-content">
+            <a href="#milk-processing">Milk Processing</a>
+            <a href="#distribution">Distribution</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="membership.html">Membership</a>
+        <div class="dropdown-content">
+            <a href="joinus.html">Join Us</a>
+            <a href="form.html">Membership Form</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="index.html">Online Shop</a>
+        <div class="dropdown-content">
+            <a href="product.html">View Products</a>
+            <a href="shop.html">Place an Order</a>
+            <a href="cart.html">Cart</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="contact.html">Contact</a>
+        <div class="dropdown-content">
+            <a href="contact.html">Contact Us</a>
+        </div>
+    </div>
+    <div class="cart-container">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-count" id="cart-count">0</span>
+        <div class="cart-dropdown" id="cart-dropdown">
+            <h3>Cart</h3>
+            <ul id="cart-items"></ul>
+            <p>Total: <span id="cart-total">0 Ksh</span></p>
+            <button class="checkout-btn" onclick="window.location.href='cart.html'">Proceed to Checkout</button>
+        </div>
+    </div>
+</nav>
+    <div class="banner">
+        <div class="banner-slider">
+            <div class="slide" style="background-image: url('./images/JMM.jpg');">
+                <div class="slide-content">
+                    <h2>Fresh Dairy Delivered to You!</h2>
+                    <p>Order by March 15, 2025, and enjoy 10% off your first delivery.</p>
+                    <button onclick="window.location.href='./shop.html'">Shop Now</button>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('./images/LV.jpg');">
+                <div class="slide-content">
+                    <h2>Pure Milk, Straight from Limuru</h2>
+                    <p>Experience the taste of sustainability.</p>
+                    <button onclick="window.location.href='./shop.html'">Explore Products</button>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('./images/Can.jpg');">
+                <div class="slide-content">
+                    <h2>Join Our Dairy Community</h2>
+                    <p>Support local farmers today!</p>
+                    <button onclick="window.location.href='./joinus.html'">Become a Member</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="products">
+        <h2>Our Products</h2>
+        <div class="products">
+            <!-- Fresh Milk -->
+            <div class="product-category">
+                <h3>Fresh Milk</h3>
+                <div class="product-list">
+                    <div class="product-card">
+                        <img src="./Images/cn.JPG" alt="Fresh Milk">
+                        <ul>
+                            <li>500ml: 60 Ksh</li>
+                        </ul>
+                        <button onclick="addToCart('Fresh Milk (500ml)', './Images/RawM.JPG', '60 Ksh')">Add to Cart</button>
+                    </div>
+                    <div class="empty-space">More sizes coming soon!</div>
+                </div>
+            </div>
+
+            <!-- ESL Milk -->
+            <div class="product-category">
+                <h3>ESL Milk</h3>
+                <div class="product-list">
+                    <div class="product-card">
+                        <img src="./Images/JMM.JPG" alt="ESL Milk">
+                        <ul>
+                            <li>500ml: 660 Ksh</li>
+                        </ul>
+                        <button onclick="addToCart('ESL Milk (500ml)', './Images/Yourg.JPG', '660 Ksh')">Add to Cart</button>
+                    </div>
+                    <div class="empty-space">Stay tuned for more!</div>
+                </div>
+            </div>
+
+<div class="product-category">
+                <h3>ESL Milk</h3>
+                <div class="product-list">
+                    <div class="product-card">
+                        <img src="./Images/JMM.JPG" alt="ESL Milk">
+                        <ul>
+                            <li>200ml: 525 Ksh</li>
+                        </ul>
+                        <button onclick="addToCart('ESL Milk (500ml)', './Images/Yourg.JPG', '660 Ksh')">Add to Cart</button>
+                    </div>
+                    <div class="empty-space">Stay tuned for more!</div>
+                </div>
+            </div>
+            <!-- Yoghurt - Strawberry -->
+            <div class="product-category">
+                <h3>Yoghurt - Strawberry</h3>
+                <div class="product-list">
+                    <div class="product-card">
+                        <img src="./Images/Straw1lt.JPG" alt="Yoghurt Strawberry 1L">
+                        <ul>
+                            <li>1L: 180 Ksh</li>
+                        </ul>
+                        <button onclick="addToCart('Yoghurt - Strawberry (1L)', './Images/Straw1lt.JPG', '180 Ksh')">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="./Images/Strawhalf.JPG" alt="Yoghurt Strawberry 500ml">
+                        <ul>
+                            <li>500ml: 90 Ksh</li>
+                        </ul>
+                        <button onclick="addToCart('Yoghurt - Strawberry (500ml)', './Images/Strawhalf.JPG', '90 Ksh')">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="./Images/Strawquar.JPG" alt="Yoghurt Strawberry 250ml">
+                        <ul>
+                            <li>250ml: 50 Ksh</li>
+                        </ul>
+                        <button onclick="addToCart('Yoghurt - Strawberry (250ml)', './Images/Strawquar.JPG', '50 Ksh')">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="./Images/StrawMid.JPG" alt="Yoghurt Strawberry 150ml">
+                        <ul>
+                            <li>150ml: 35 Ksh</li>
+                        </ul>
+                        <button onclick="addToCart('Yoghurt - Strawberry (150ml)', './Images/StrawMid.JPG', '35 Ksh')">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="./Images/Strawsmal.JPG" alt="Yoghurt Strawberry 100ml">
+                        <ul>
+                            <li>100ml: 25 Ksh</li>
+                        </ul>
+                        <button onclick="addToCart('Yoghurt - Strawberry (100ml)', './Images/Strawsmal.JPG', '25 Ksh')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Yoghurt - Vanilla -->
+            <div class="product-category">
+                <h3>Yoghurt - Vanilla</h3>
+                <div class="product-list">
+                    <div class="product-card">
+                        <img src="./Images/Van1lt.JPG" alt="Yoghurt Vanilla 1L">
+                        <ul>
+                            <li>1L: 180 Ksh</li>
+                        </ul>
+                        <button onclick="addToCart('Yoghurt - Vanilla (1L)', './Images/Van1lt.JPG', '180 Ksh')">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="./Images/Vanhalf.JPG" alt="Yoghurt Vanilla 500ml">
+                        <ul>
+                            <li>500ml: 90 Ksh</li>
+                        </ul>
+                        <button onclick="addToCart('Yoghurt - Vanilla (500ml)', './Images/Vanhalf.JPG', '90 Ksh')">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="./Images/VANQ2.JPG" alt="Yoghurt Vanilla 250ml">
+                        <ul>
+                            <li>250ml: 50 Ksh</li>
+                        </ul>
+                        <button onclick="addToCart('Yoghurt - Vanilla (250ml)', './Images/VANQ2.JPG', '50 Ksh')">Add to Cart</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="./Images/StrawMid.JPG" alt="Yoghurt Vanilla 150ml">
+                        <ul>
+                            <li>150ml: 35 Ksh</li>
+                            <li>100ml: 25 Ksh</li>
+                        </ul>
+                        <button onclick="addToCart('Yoghurt - Vanilla (150ml)', './Images/StrawMid.JPG', '35 Ksh')">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Limuru Dairy Farmers Co-operative Society LTD. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        document.getElementById('cart-count').textContent = cart.length;
+
+        function addToCart(productName, imageSrc, price) {
+            const product = { name: productName, price: price, image: imageSrc };
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            document.getElementById('cart-count').textContent = cart.length;
+            window.location.href = './shop.html'; // Redirect to Place an Order page
+        }
+    </script>
+</body>
+</html>

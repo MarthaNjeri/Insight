@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Limuru Dairy</title>
+    <!-- Font Awesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 1rem;
+            background: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Navbar Styles */
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #34495e;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            transition: 0.3s;
+        }
+        nav a:hover {
+            background: #1abc9c;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background: #ddd;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .cart-container {
+            position: relative;
+            display: inline-block;
+            margin-left: 20px;
+        }
+        .cart-icon {
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            transition: 0.3s;
+        }
+        .cart-icon:hover {
+            background: #1abc9c;
+        }
+        .cart-count {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #e67e22;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+        /* Removed cart-preview styles since they’re unused here */
+
+        /* Banner Styles */
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+        .banner-slider {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            animation: slideShift 15s infinite ease-in-out;
+        }
+        .slide {
+            flex: 1 0 100%;
+            height: 100%;
+            background: center/cover no-repeat;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateZ(20px);
+            text-align: center;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .slide-content h2 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .slide-content p {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .slide-content button {
+            background: #e67e22;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.3s, transform 0.3s;
+            transform: translateZ(30px);
+        }
+        .slide-content button:hover {
+            background: #d35400;
+            transform: translateZ(40px);
+        }
+        @keyframes slideShift {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(0); }
+            33% { transform: translateX(-100%); }
+            58% { transform: translateX(-100%); }
+            66% { transform: translateX(-200%); }
+            91% { transform: translateX(-200%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Existing Styles */
+        h2 {
+            font-size: clamp(1.25rem, 4vw, 1.5rem);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .follow-us, .contact-form, .location {
+            margin-bottom: 2rem;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .social-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 0.75rem;
+            justify-content: center;
+        }
+        .social-icons a {
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
+            color: #333;
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: #007bff;
+        }
+        .contact-form form {
+            background-color: #f5f5f5;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .contact-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+        }
+        .contact-form button {
+            background-color: #007bff;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+        }
+        .contact-form button:hover {
+            background-color: #0056b3;
+        }
+        .location p {
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+        }
+        .location iframe {
+            width: 100%;
+            height: clamp(200px, 50vw, 300px);
+            border: 0;
+            border-radius: 0.25rem;
+            margin-top: 1rem;
+        }
+        .chat-popup {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background-color: #25D366;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            z-index: 1000;
+        }
+        .chat-options {
+            display: none;
+            position: fixed;
+            bottom: clamp(3rem, 10vw, 4.5rem);
+            right: 1rem;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 1rem;
+            border-radius: 0.25rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: clamp(150px, 40vw, 200px);
+            z-index: 1000;
+        }
+        .chat-options a {
+            display: block;
+            margin: 0.5rem 0;
+            color: #333;
+            text-decoration: none;
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+        }
+        .chat-options a:hover {
+            color: #007bff;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .banner { height: 300px; }
+            .slide-content h2 { font-size: 22px; }
+            .slide-content p { font-size: 16px; }
+            .slide-content button { padding: 8px 16px; font-size: 16px; }
+            nav { flex-direction: column; text-align: center; }
+            .cart-container { margin: 10px 0; }
+        }
+        @media (min-width: 640px) {
+            .container { padding: 0 1.5rem; }
+            .contact-form form { padding: 1.5rem; }
+            .contact-form button { width: auto; }
+        }
+        @media (min-width: 1024px) {
+            .container { padding: 0 2rem; }
+            h2 { margin-bottom: 0.75rem; }
+            .contact-form form { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+    <h1>Limuru Dairy Farmers Co-operative Society LTD</h1>
+</header>
+
+<nav>
+    <div class="dropdown">
+        <a href="about.html">About</a>
+        <div class="dropdown-content">
+            <a href="about.html">About Us</a>
+            <a href="history.html">History</a>
+            <a href="mission.html">Mission</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="#services">Services</a>
+        <div class="dropdown-content">
+            <a href="#milk-processing">Milk Processing</a>
+            <a href="#distribution">Distribution</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="membership.html">Membership</a>
+        <div class="dropdown-content">
+            <a href="joinus.html">Join Us</a>
+            <a href="form.html">Membership Form</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="index.html">Online Shop</a>
+        <div class="dropdown-content">
+            <a href="product.html">View Products</a>
+            <a href="shop.html">Place an Order</a>
+            <a href="cart.html">Cart</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="contact.html">Contact</a>
+        <div class="dropdown-content">
+            <a href="contact.html">Contact Us</a>
+        </div>
+    </div>
+    <div class="cart-container">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-count" id="cart-count">0</span>
+        <div class="cart-dropdown" id="cart-dropdown">
+            <h3>Cart</h3>
+            <ul id="cart-items"></ul>
+            <p>Total: <span id="cart-total">0 Ksh</span></p>
+            <button class="checkout-btn" onclick="window.location.href='cart.html'">Proceed to Checkout</button>
+        </div>
+    </div>
+</nav>
+
+    <!-- Banner -->
+    <div class="banner">
+        <div class="banner-slider">
+            <div class="slide" style="background-image: url('images/event2.jpg');">
+                <div class="slide-content">
+                    <h2>Fresh Dairy Delivered to You!</h2>
+                    <p>Order by March 15, 2025, and enjoy 10% off your first delivery.</p>
+                    <button onclick="window.location.href='product.html'">Shop Now</button>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('images/pro.jpg');">
+                <div class="slide-content">
+                    <h2>Pure Milk, Straight from Limuru</h2>
+                    <p>Experience the taste of sustainability.</p>
+                    <button onclick="window.location.href='product.html'">Explore Products</button>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('images/Can.jpg');">
+                <div class="slide-content">
+                    <h2>Join Our Dairy Community</h2>
+                    <p>Support local farmers today!</p>
+                    <button onclick="window.location.href='joinus.html'">Become a Member</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Follow Us Section -->
+        <section class="follow-us">
+            <h2>Follow Us</h2>
+            <p>Stay in touch with us</p>
+            <div class="social-icons">
+                <a href="https://facebook.com/limurudairy" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i></a>
+                <a href="https://twitter.com/limurudairy" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                <a href="https://youtube.com/limurudairy" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+                <a href="https://wa.me/254713833814" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://identi.ca/limurudairy" target="_blank" rel="noopener noreferrer"><i class="fas fa-globe"></i></a>
+            </div>
+        </section>
+
+        <!-- Contact Form -->
+        <section class="contact-form">
+            <h2>Contact Us</h2>
+            <form>
+                <label>Name</label>
+                <input type="text" placeholder="Your Name">
+                <label>Email</label>
+                <input type="email" placeholder="Your Email">
+                <label>Message</label>
+                <textarea placeholder="Your Message" rows="4"></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+
+        <!-- Our Location Section -->
+        <section class="location">
+            <h2>Our Location</h2>
+            <p>
+                Maziwa House, 4th Floor<br>
+                P.O. Box 8-00217, Limuru<br>
+                Tel: 020-2010611<br>
+                Cell: 0713-833814<br>
+                Email: <a href="mailto:limurudairy@gmail.com">limurudairy@gmail.com</a><br>
+                Email: <a href="mailto:info@limurudairy.co.ke">info@limurudairy.co.ke</a><br>
+                Website: <a href="http://www.limurudairy.co.ke" target="_blank" rel="noopener noreferrer">www.limurudairy.co.ke</a>
+            </p>
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.064073073073!2d36.64131731475375!3d-1.1084449999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f4e9f8e8e8e8e%3A0x8e8e8e8e8e8e8e8e!2sLimuru%2C%20Kenya!5e0!3m2!1sen!2sus!4v1615824899999!5m2!1sen!2sus"
+                allowfullscreen
+                loading="lazy">
+            </iframe>
+        </section>
+    </div>
+
+    <!-- Chat Popup -->
+    <div class="chat-popup" onclick="toggleChat()">How can we help you?</div>
+    <div class="chat-options" id="chatOptions">
+        <a href="https://wa.me/254713833814" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+        <a href="mailto:info@limurudairy.co.ke">Send us an Email</a>
+    </div>
+
+    <script>
+        // Chat Popup Toggle
+        function toggleChat() {
+            var chatOptions = document.getElementById("chatOptions");
+            chatOptions.style.display = chatOptions.style.display === "block" ? "none" : "block";
+        }
+
+        // Load cart from localStorage and update cart count
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartCount = document.getElementById('cart-count');
+
+        function updateCartPreview() {
+            cartCount.textContent = cart.length;
+        }
+
+        // Update cart preview on page load
+        updateCartPreview();
+    </script>
+</body>
+</html>

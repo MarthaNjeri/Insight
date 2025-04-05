@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Form - Limuru Dairy Farmers Co-operative Society LTD</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
+        header { background: #2c3e50; color: white; padding: 20px; text-align: center; }
+        nav { display: flex; justify-content: center; background: #34495e; padding: 10px; }
+        nav a { color: white; text-decoration: none; padding: 10px 20px; transition: 0.3s; }
+        nav a:hover { background: #1abc9c; }
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { 
+            display: none; position: absolute; background-color: #f9f9f9; 
+            min-width: 160px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); z-index: 1; 
+        }
+        .dropdown-content a { color: black; padding: 12px 16px; text-decoration: none; display: block; }
+        .dropdown-content a:hover { background: #ddd; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .cart-container { position: relative; display: inline-block; margin-left: 20px; }
+        .cart-icon { font-size: 24px; color: white; cursor: pointer; padding: 10px; transition: 0.3s; }
+        .cart-icon:hover { background: #1abc9c; }
+        .cart-count { position: absolute; top: 0; right: 0; background: #e67e22; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; }
+        section { padding: 40px; text-align: center; background: white; margin: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 10px; }
+        footer { background: #2c3e50; color: white; text-align: center; padding: 10px; margin-top: 20px; }
+
+        /* Banner styles */
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+        .banner-slider {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            animation: slideShift 15s infinite ease-in-out;
+        }
+        .slide {
+            flex: 1 0 100%;
+            height: 100%;
+            background: center/cover no-repeat;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        .slide-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateZ(20px);
+            text-align: center;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .slide-content h2 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .slide-content p {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .slide-content button {
+            background: #e67e22;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px; /* Fixed typo from '18 gleichpx' */
+            transition: background 0.3s, transform 0.3s;
+            transform: translateZ(30px);
+        }
+        .slide-content button:hover {
+            background: #d35400;
+            transform: translateZ(40px);
+        }
+        @keyframes slideShift {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(0); }
+            33% { transform: translateX(-100%); }
+            58% { transform: translateX(-100%); }
+            66% { transform: translateX(-200%); }
+            91% { transform: translateX(-200%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Form-specific styles */
+        .section { margin: 20px 0; }
+        form { max-width: 600px; margin: 0 auto; text-align: left; }
+        label { display: block; margin: 10px 0 5px; font-weight: bold; }
+        input, select { 
+            width: 100%; padding: 10px; margin-bottom: 15px; 
+            border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; 
+        }
+        input[type="text"], input[type="tel"], input[type="email"] { width: calc(50% - 10px); display: inline-block; }
+        input[type="text"]:nth-child(odd) { margin-right: 20px; }
+        button[type="submit"] { 
+            background: #3498db; color: white; padding: 12px 20px; 
+            border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; 
+        }
+        button[type="submit"]:hover { background: #2980b9; }
+
+        @media (max-width: 768px) {
+            .banner { height: 300px; }
+            .slide-content h2 { font-size: 22px; }
+            .slide-content p { font-size: 16px; }
+            .slide-content button { padding: 8px 16px; font-size: 16px; }
+            nav { flex-direction: column; text-align: center; }
+            .cart-container { margin: 10px 0; }
+            input[type="text"], input[type="tel"], input[type="email"] { width: 100%; margin-right: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Limuru Dairy Farmers Co-operative Society LTD</h1>
+    </header
+<nav>
+    <div class="dropdown">
+        <a href="about.html">About</a>
+        <div class="dropdown-content">
+            <a href="about.html">About Us</a>
+            <a href="history.html">History</a>
+            <a href="mission.html">Mission</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="#services">Services</a>
+        <div class="dropdown-content">
+            <a href="#milk-processing">Milk Processing</a>
+            <a href="#distribution">Distribution</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="membership.html">Membership</a>
+        <div class="dropdown-content">
+            <a href="joinus.html">Join Us</a>
+            <a href="form.html">Membership Form</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="index.html">Online Shop</a>
+        <div class="dropdown-content">
+            <a href="product.html">View Products</a>
+            <a href="shop.html">Place an Order</a>
+            <a href="cart.html">Cart</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <a href="contact.html">Contact</a>
+        <div class="dropdown-content">
+            <a href="contact.html">Contact Us</a>
+        </div>
+    </div>
+    <div class="cart-container">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-count" id="cart-count">0</span>
+        <div class="cart-dropdown" id="cart-dropdown">
+            <h3>Cart</h3>
+            <ul id="cart-items"></ul>
+            <p>Total: <span id="cart-total">0 Ksh</span></p>
+            <button class="checkout-btn" onclick="window.location.href='cart.html'">Proceed to Checkout</button>
+        </div>
+    </div>
+</nav>
+    <div class="banner">
+        <div class="banner-slider">
+            <div class="slide" style="background-image: url('images/event2.jpg');">
+                <div class="slide-content">
+                    <h2>Fresh Dairy Delivered to You!</h2>
+                    <p>Order by March 15, 2025, and enjoy 10% off your first delivery.</p>
+                    <button onclick="window.location.href='product.html'">Shop Now</button>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('images/pro.jpg');">
+                <div class="slide-content">
+                    <h2>Pure Milk, Straight from Limuru</h2>
+                    <p>Experience the taste of sustainability.</p>
+                    <button onclick="window.location.href='product.html'">Explore Products</button>
+                </div>
+            </div>
+            <div class="slide" style="background-image: url('images/Can.jpg');">
+                <div class="slide-content">
+                    <h2>Join Our Dairy Community</h2>
+                    <p>Support local farmers today!</p>
+                    <button onclick="window.location.href='joinus.html'">Become a Member</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section>
+        <h2>Membership Form</h2>
+        <div class="section">
+            <p>Join us to enjoy benefits like a guaranteed market for your milk, credit facilities, and free agricultural education. See <a href="joinus.html">Join Us</a> for full details.</p>
+        </div>
+        <div class="section">
+            <h3>Members Joining Form</h3>
+            <form>
+                <label for="firstName">Name *</label>
+                <input type="text" id="firstName" placeholder="First" required>
+                <input type="text" id="lastName" placeholder="Last" required>
+
+                <label for="mobile">Mobile Number *</label>
+                <input type="tel" id="mobile" required>
+
+                <label for="idNumber">ID Number *</label>
+                <input type="text" id="idNumber" required>
+
+                <label for="email">Email *</label>
+                <input type="email" id="email" required>
+
+                <label for="collectionCenter">Nearest Collection Center *</label>
+                <select id="collectionCenter" required>
+                    <option value="">Select a center</option>
+                    <option value="R001">R001 Limuru</option>
+                    <option value="R002">R002</option>
+                    <option value="R003">R003</option>
+                    <option value="R004">R004</option>
+                    <option value="R005">R005</option>
+                    <option value="R006">R006</option>
+                    <option value="R007">R007</option>
+                    <option value="R010">R010</option>
+                    <option value="R011">R011</option>
+                    <option value="R012">R012</option>
+                    <option value="R013">R013</option>
+                    <option value="R014">R014</option>
+                    <option value="R015">R015</option>
+                    <option value="R016">R016</option>
+                    <option value="R017">R017</option>
+                    <option value="R018">R018</option>
+                    <option value="R019">R019</option>
+                    <option value="R020">R020</option>
+                    <option value="R021">R021</option>
+                    <option value="R022">R022</option>
+                    <option value="R024">R024</option>
+                    <option value="R027">R027</option>
+                    <option value="R028">R028</option>
+                    <option value="R030">R030</option>
+                    <option value="R032">R032</option>
+                    <option value="R033">R033</option>
+                    <option value="R033A">R033A</option>
+                    <option value="R036">R036</option>
+                    <option value="R037">R037</option>
+                    <option value="R038">R038</option>
+                    <option value="R039">R039</option>
+                    <option value="R040">R040</option>
+                    <option value="R041">R041</option>
+                    <option value="R042">R042</option>
+                </select>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Limuru Dairy Farmers Co-operative Society LTD. All rights reserved.</p>
+    </footer>
+</body>
+</html>
